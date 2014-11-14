@@ -3,6 +3,7 @@ __author__ = 'nikita_kartashov'
 from functools import reduce
 from itertools import chain, islice
 from operator import mul
+from random import random
 
 
 def sliding(string, k):
@@ -22,10 +23,6 @@ def fst(x):
 
 def snd(x):
     return x[1]
-
-
-def last(x):
-    return x[len(x) - 1]
 
 
 def sort(data, by_fun=lambda x: x, descending=False):
@@ -93,5 +90,52 @@ def product(l):
     return reduce(mul, l)
 
 
+def head(l):
+    return fst(l)
+
+
 def tail(l):
     return l[1:]
+
+
+def init(l):
+    return l[:len(l) - 1]
+
+
+def last(x):
+    return x[len(x) - 1]
+
+
+def choose_by(function, choices):
+    partial_sums = [0]
+    for value in choices:
+        function_value = function(value)
+        partial_sums.append(last(partial_sums) + function_value)
+    max_value = last(partial_sums)
+    choice = random() * max_value
+    for index, partial_sum in enumerate(partial_sums):
+        if choice < partial_sum:
+            return choices[index - 1]
+    return last(choices)
+
+
+def choose_by_snd(choices):
+    return choose_by(snd, choices)
+
+
+def choose_by_snd_and_ignore(choices):
+    return fst(choose_by_snd(choices))
+
+
+def without_nth(l, n):
+    return map(snd, filter(lambda e: fst(e) != n, enumerate(l)))
+
+
+def drop_last_n(l, n):
+    return l[:len(l) - n]
+
+
+if __name__ == '__main__':
+    n = 1000
+    values = [(0.5, 1), (1, 1)]
+    print(sum([choose_by_snd_and_ignore(values) for i in range(n)]) * 1.0 / n)

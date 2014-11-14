@@ -6,6 +6,10 @@ from utils.pyutils import product, top_by_snd_and_ignore, transpose, fst
 NUCLEOTIDES_FOR_PROBABILITIES = ['A', 'C', 'G', 'T']
 
 
+def nucleotide_to_index(nucleotide):
+    return NUCLEOTIDES_FOR_PROBABILITIES.index(nucleotide)
+
+
 def probability_score(kmer, probabilities):
     return product(probabilities[nucleotide_index][NUCLEOTIDES_FOR_PROBABILITIES.index(nucleotide)]
                    for nucleotide_index, nucleotide in enumerate(kmer))

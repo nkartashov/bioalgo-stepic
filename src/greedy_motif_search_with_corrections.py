@@ -4,6 +4,7 @@ from profile_most_probable_kmer import NUCLEOTIDES_FOR_PROBABILITIES
 from greedy_motif_search import greedy_motif_search
 from utils.pyutils import transpose
 
+
 def build_profile_columns_with_corrections(motifs):
     columns = transpose(motifs)
 

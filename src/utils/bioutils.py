@@ -68,8 +68,9 @@ def hamming_distance(text1, text2):
     return sum(map(mapper, zip(text1, text2)))
 
 
-def all_possible_kmers(length):
-    alphabet = ['A', 'C', 'T', 'G']
+def all_possible_kmers(length, alphabet=None):
+    if not alphabet:
+        alphabet = ['A', 'C', 'T', 'G']
     return (''.join(t) for t in product(alphabet, repeat=length))
 
 

@@ -29,8 +29,13 @@ def build_profile_columns(motifs):
     return [column_probabilites(column) for column in columns]
 
 
-def greedy_motif_search(dna_strings, k, profile_builder=build_profile_columns):
-    best_motifs = [dna_string[:k] for dna_string in dna_strings]
+def first_kmer_builder(dna_strings, k):
+    return [dna_string[:k] for dna_string in dna_strings]
+
+
+def greedy_motif_search(dna_strings, k, profile_builder=build_profile_columns,
+                        initial_motifs_builder=first_kmer_builder):
+    best_motifs = initial_motifs_builder(dna_strings, k)
     for kmer in all_possible_kmers_from_text(fst(dna_strings), k):
         current_score = matrix_score(best_motifs)
         motifs = [kmer]
